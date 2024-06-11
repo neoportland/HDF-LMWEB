@@ -1,12 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const getStorage = () => {
+  if (localStorage.getItem("films"))
+    return JSON.parse(localStorage.getItem("films"));
+  else {
+    return [];
+  }
+};
+
 const initialState = {
   inputValue: [],
   watchListValue: 0,
   watchedValue: 0,
-  watchList: [], // izlediğim filmleri buraya alıp daha sonra watchcomponentinde sergileyebilirim.
-  watched: [],
+  watchList: getStorage(),
+
+  watched: [], // sadece watchList için localstorage atıldı watched için yapılmaı dolayısıyla yenilendiğinde değerler gidecek
   filmInfo: "there are no info for what you are looking ",
+};
+
+const sentLocal = (event) => {
+  localStorage.setItem("films", JSON.stringify(event));
 };
 
 export const filmSlice = createSlice({
@@ -49,6 +62,7 @@ export const filmSlice = createSlice({
         (film) => film.id != action.payload
       );
       state.watchList = newList;
+      sentLocal(state.watchList);
     },
     deleteWathcedListById: (state, action) => {
       const newList = state.watched.filter((film) => film.id != action.payload);
@@ -56,29 +70,14 @@ export const filmSlice = createSlice({
     },
 
     addfilmToWatchList: (state, action) => {
-      //   console.log("button basıldı ");
-      //   console.log("state.wathlist içerde ilk:", state.watchList);
-      //   console.log("action.payload:", action.payload);
+      // bu alanda seçtiğim filmi direk watchliste ekledim bir sorun yok ok . peki ben direk eklemek yerine önce localstroage ekelsem sonra da  ordan watchlisteme eklesem resfresh de veriler kaybolmaz
+
       state.watchList = [...state.watchList, action.payload];
-      console.log(
-        "film eklem alanından bakıyorum  state.wathlist:",
-        state.watchList
-      );
-      //   console.log("state.wathlist içerde ikinici:", state.watchList);
+      sentLocal(state.watchList);
     },
 
     addFilmToWatched: (state, action) => {
       state.watched = [...state.watched, action.payload];
-      //   console.log("state.watched : ");
-      //   console.log(state.watched);
-    },
-
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
     },
   },
 });
@@ -86,7 +85,6 @@ export const filmSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   addToWatchList,
-  increment,
   getInputValue,
   addToWatchedList,
   addfilmToWatchList,

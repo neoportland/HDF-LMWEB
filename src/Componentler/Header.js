@@ -25,7 +25,7 @@ const Header = () => {
                     right: "-1px",
                   }}
                 >
-                  {watchList.length}
+                  {watchList && watchList.length}
                 </h3>
               </div>
               <h4>İzlenecekler</h4>

@@ -10,9 +10,8 @@ const Add = (async) => {
   const [post, setPost] = useState([]);
   const [inputValue, setinputValue] = useState([]);
 
-  const { data } = useGetFilmByNameQuery(inputValue); // gelen bu değerleri acaba localstorage atsam sonra da çeksem nasıl olur
-  // const filmlocal = localStorage.setItem("films", JSON.stringify(data));
-  // const result = filmlocal && JSON.parse(localStorage.getItem("films"));
+  const { data } = useGetFilmByNameQuery(inputValue); //
+
   let data2;
   if (data) {
     data2 = data;
@@ -20,48 +19,13 @@ const Add = (async) => {
     data2 = []; // eğer boş gelirse data2.results tanımsız bir değer olur bu yüzden tanımsız olmaması için boş array gönderdik geriye
   }
 
-  // console.log("yallah bismillah   add data:", data2.results);
-
-  // console.log("Result: ...", result);
-  // console.log("yallah bismillah  getFilmByName :", data.results);
-  // console.log("yallah bismillah  disSucces :", isSuccess);
-  // console.log("yallah bismillah  isLoading :", isLoading);
-  // console.log("yallah bismillah  isError :", isError);
-
-  // const newArray = data.results;
-  // console.log("yallah bismillah newArray", newArray);
-
   const searching = (event) => {
-    // input değerini bir state e ata
     setinputValue(event.target.value);
   };
 
   useEffect(() => {
-    // getAllData();
     dispatch(getInputValue(inputValue));
   }, [inputValue]);
-
-  // async function getAllData() {
-  //   await axios
-  //     .get(
-  //       `https://api.themoviedb.org/3/search/movie?query=${inputValue}&api_key=5d527e668551b9b5558736c1885969c6`
-  //     )
-  //     // .get(`http://www.omdbapi.com/?apikey=1a1c20a9&s=${inputValue}`)
-  //     .then((response) => {
-  //       // console.log(" state öncesi gelen dizi: ");
-  //       // console.log(response.data.results);
-  //       setPost(response.data.results);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
-  // console.log("state içindeki posts:", post);
-  // console.log("postvalues: ");
-  // console.log(post);
-
-  // console.log("input değerleri :", inputValue);
-  // console.log("post değerleri :", post);
 
   return (
     <div className="add-page">
