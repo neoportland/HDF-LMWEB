@@ -26,15 +26,6 @@ export const filmSlice = createSlice({
   name: "film",
   initialState,
   reducers: {
-    //input değerlerni aldın şimdi de rtkapisinden linki mi alıyorsun  ya da orada bu fonksiyonu mu kullanıyorsun
-
-    getInputValue: (state, action) => {
-      console.log("input değerlerini anlık alabiliyorum");
-      state.inputValue = action.payload;
-      console.log("son durum  :");
-      console.log(state.inputValue);
-    },
-
     addToWatchList: (state, action) => {
       state.watchList = [...state.watchList, action.payload];
 
@@ -53,6 +44,7 @@ export const filmSlice = createSlice({
         (film) => film.id != action.payload.id
       );
       state.watchList = newList;
+      sentLocal(state.watchList);
     },
 
     deleteWathcListById: (state, action) => {

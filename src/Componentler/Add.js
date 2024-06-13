@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FilmCard from "./FilmCard";
 import { useDispatch } from "react-redux";
-import { getInputValue } from "./redux/slice/filmSlice";
 import { useGetFilmByNameQuery } from "./redux/api/filmApi";
 
 const Add = (async) => {
@@ -22,10 +21,6 @@ const Add = (async) => {
   const searching = (event) => {
     setinputValue(event.target.value);
   };
-
-  useEffect(() => {
-    dispatch(getInputValue(inputValue));
-  }, [inputValue]);
 
   return (
     <div className="add-page">
